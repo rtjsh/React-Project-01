@@ -1,9 +1,4 @@
-# Resources used
 
-Appwrite -> Backend as a service
-TinyMCE -> Text Editor
-html-react-praser -> Parses HTML code to React code
-React Hook Form -> Handling forms
 
 # If the React project is created using "create react-app" then ".env" file is declared and initialized as:
 
