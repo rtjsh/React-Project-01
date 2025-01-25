@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 
 // $id is a syntax for id in "appwrite"
 // For displaying the post card in the home page, we need to pass the id, title and featuredImage
-function postCard({$id, title, featuredImage}){
+function PostCard({$id, title, featuredImage}){
     return(
         <Link to={`/post/${$id}`}>
             <div className="w-full bg-gray-100 rounded-xl p-4">
@@ -20,4 +20,4 @@ function postCard({$id, title, featuredImage}){
     )
 }
 
-export default postCard
+export default PostCard

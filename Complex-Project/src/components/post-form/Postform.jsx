@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { Button, Input, RTE, Select } from "..";
 import service from "../../appwrite/conf";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { createPost, updatePost } from "../../store/postSlice";
 
 export default function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, control, getValues } =
@@ -15,7 +16,8 @@ export default function PostForm({ post }) {
         status: post?.status || "active",
       },
     });
-
+  
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
 
@@ -27,7 +29,13 @@ export default function PostForm({ post }) {
 
       if (file) {
         service.deleteFile(post.featuredImage);
+        data.featuredImage = file.$id;
+            } 
+      else{
+            data.featuredImage = post.featuredImage;
       }
+      delete data.image;
+
 
       const dbPost = await service.updatePost(post.$id, {
         ...data,
@@ -37,12 +45,15 @@ export default function PostForm({ post }) {
       if (dbPost) {
         navigate(`/post/${dbPost.$id}`);
       }
+      dispatch(updatePost({ post, data }))
     } else {
       const file = await service.uploadFile(data.image[0]);
 
       if (file) {
         const fileId = file.$id;
         data.featuredImage = fileId;
+        delete data.image;
+
         const dbPost = await service.createPost({
           ...data,
           userId: file.$id,
@@ -51,6 +62,7 @@ export default function PostForm({ post }) {
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`);
         }
+        dispatch(createPost({...data, userId : userData.$id, $id: dbPost.$id}))
       }
     }
   };

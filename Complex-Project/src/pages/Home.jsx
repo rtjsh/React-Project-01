@@ -1,16 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import service from '../appwrite/conf'
 import {Container, postCard} from '../components'
+import {useSelector} from 'react-redux'
 
 function Home() {
-    const [posts, setPosts] = useState([])
-    useEffect(() => {
-        service.getPosts().then((posts) => {
-            if(posts){
-                setPosts(posts.documents)
-            }
-        })
-    }, [])
+    // const [posts, setPosts] = useState([])
+    // useEffect(() => {
+    //     service.getPosts().then((posts) => {
+    //         if(posts){
+    //             setPosts(posts.documents)
+    //         }
+    //     })
+    // }, [])
+    const posts = useSelector(state => state.post.posts)
     if (posts.length === 0) {
         return (
             <div className="w-full py-8 mt-4 text-center">

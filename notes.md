@@ -182,3 +182,81 @@ A function used to register input elements into React Hook Form's state.
 handleSubmit:
 
 A function that wraps your form's submit logic.
+
+# Code:
+
+const postSlice = createSlice({
+    name:'post',
+    initialState,
+    reducers: {
+        createPost: (state, action) => {
+            state.posts.push({...action.payload}); // Here, we are pushing the new post into the posts array 
+        },
+
+        updatePost: (state, action) => {
+          const { post, data } = action.payload;
+          state.posts = state.posts.map((p) => p.$id === post.$id ? { $id: post.$id, ...data } : p)
+        },
+
+        removePost: (state, action) => {
+            const post = action.payload;
+            state.posts = state.posts.filter((p) => p.$id !== post.$id);
+        },
+
+        setPosts: (state, action) => {
+            const posts = action.payload;
+            state.posts = [...posts];
+        }
+
+    }
+}) 
+
+This code defines a Redux slice using the createSlice function from Redux Toolkit. It manages the state for posts, providing various reducers to modify the posts array. Here's a detailed explanation of each reducer:
+
+# createPost
+Purpose: Adds a new post to the posts array.
+
+Parameters: state (current state) and action (contains the payload of the new post to add).
+
+state.posts.push({...action.payload});
+The payload (action.payload) represents the new post. The reducer spreads the properties of the payload object and pushes it into the posts array.
+Use case: When a user creates a new post, this reducer adds it to the state.
+
+# updatePost
+Purpose: Updates an existing post in the posts array based on its $id.
+
+Parameters: state (current state) and action (contains the post to update and the new data).
+
+const { post, data } = action.payload;
+state.posts = state.posts.map((p) =>
+  p.$id === post.$id ? { $id: post.$id, ...data } : p
+);
+The payload has two parts:
+post: The current post to update.
+data: The new data for the post.
+The map() function iterates over the posts array:
+If a post with the same $id is found, it returns an updated post by combining the existing $id with the new data.
+Otherwise, it returns the unchanged post.
+Use case: When a user edits a post, this reducer updates the specific post.
+
+# removePost
+Purpose: Removes a post from the posts array based on its $id.
+
+Parameters: state (current state) and action (contains the post to remove).
+
+const post = action.payload;
+state.posts = state.posts.filter((p) => p.$id !== post.$id);
+The payload (action.payload) represents the post to be removed.
+The filter() function creates a new array that excludes the post with the matching $id.
+Use case: When a user deletes a post, this reducer removes it from the state.
+
+# setPosts
+Purpose: Replaces the current posts array with a new array of posts.
+
+Parameters: state (current state) and action (contains the new array of posts).
+
+const posts = action.payload;
+state.posts = [...posts];
+The payload (action.payload) is expected to be an array of posts.
+The reducer assigns the new array to the posts property.
+Use case: When fetching posts from an API or resetting the posts list, this reducer sets the state with the fetched/updated posts.

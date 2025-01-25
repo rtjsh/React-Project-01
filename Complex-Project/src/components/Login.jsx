@@ -19,7 +19,7 @@ function Login(){
             if (session) // If session is available, then user is logged in else not
                 {
                 const userData = await authService.getCurrentUser()
-                if (userData) dispatch(authLogin(userData));
+                if (userData) dispatch(authLogin({userData}));
                 navigate("/") // If we use a "Link" to navigate, there is a need to click but using "/", we don't have to do that. If the login is successful, then we will navigate to the home page
             }
         }

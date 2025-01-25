@@ -1,25 +1,25 @@
-import React from 'react'
-import { Container } from '../components'
+import { Container,PostCard } from '../components'
 import service from '../appwrite/conf'
 import { useState, useEffect } from 'react'
-import { postCard } from '../components'
+import {useSelector} from 'react-redux'
 
 function AllPosts() {
-    const [posts, setPosts] = useState([])
-    useEffect(() => {
-      service.getPosts([]).then((posts) => {
-  if (posts) {
-      setPosts(posts.documents)
-  }
-})
-}, [])
+//     const [posts, setPosts] = useState([])
+//     useEffect(() => {
+//       service.getPosts([]).then((posts) => {
+//   if (posts) {
+//       setPosts(posts.documents)
+//   }
+// })
+// }, [])
+  const posts = useSelector(state => state.post.posts)
   return (
-    <div className='py-8 w-full'>
+    <div className='w-full py-8'>
       <Container>
         <div className='flex flex-wrap'>
         {posts.map((post) => ( 
             <div key={post.$id} className='p-2 w-1/4'>
-                <postCard post={post} />
+                <PostCard {...post} />
             </div>
         ))}
         </div>

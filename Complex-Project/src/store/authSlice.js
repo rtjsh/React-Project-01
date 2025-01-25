@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"; // Here, we are using this for knowing if the user is authenticated or not
+import { createSlice } from "@reduxjs/toolkit"; 
 
+// Here, we are using this for knowing if the user is authenticated or not
 const initialState = {
     status: false,  // Not user authenticated
     userData: null
@@ -16,7 +17,7 @@ const authSlice = createSlice({
         logout: (state)=>{
             state.status = false,
             state.userData = null
-        }
+        } 
     }
 })
 
