@@ -34,12 +34,16 @@ export class Service{
         }
 
     }
+
+    // While updating a post, we need to pass the slug of the post to be updated. So, we need to pass the slug as a parameter apart from the object containing the updated values.
+
     async updatePost(slug,{title,content,featuredImage,status}){
         try{
             return await this.databases.updateDocument(
             config.appwriteDatabaseId,
             config.appwriteCollectionId,
-            slug, // Document ID (slug)     
+            slug, // Document ID (slug)  
+            // Items to be updated   
             {
                 title,
                 content,
@@ -92,6 +96,8 @@ export class Service{
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 queries
+                // We can also do this instead of passing the queries as an argument
+                // [Query.equal("status","active")]
             )
 
         }
@@ -119,7 +125,7 @@ export class Service{
 
     async deleteFile(fileId){
         try{
-            return await this.bucket.deleteFile(
+                await this.bucket.deleteFile(
                 config.appwriteBucketId,
                 fileId
             )
