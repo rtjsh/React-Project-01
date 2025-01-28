@@ -1,12 +1,12 @@
-import Header from "./Header/header";
-import Footer from "./Footer/footer";
-import Container from "./container/container";
-import Logo from "./container/logo"
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
+import Container from "./container/Container";
+import Logo from "./container/Logo"
 import LogoutBtn from "./Header/LogoutBtn"
 import RTE from "./RTE";
 import Signup from "./Signup";
 import Login from "./Login";
-import PostCard from './postCard'
+import PostCard from './PostCard'
 import PostForm from "./post-form/Postform"
 // import Post from "../pages/Post";
 import AuthLayout from "./AuthLayout";
